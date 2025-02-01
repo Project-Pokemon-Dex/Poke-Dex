@@ -3,9 +3,11 @@ import Navbar from "../components/Navbar";
 
 const HomePage = () => {
   return (
-    <div>
-      <Navbar />
-    </div>
+    <>
+      <div className="w-full block absolute z-20">
+        <Navbar />
+      </div>
+    </>
   );
 };
 
