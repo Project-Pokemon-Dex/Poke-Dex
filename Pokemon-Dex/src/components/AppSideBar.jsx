@@ -11,7 +11,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarSeparator,
-  SidebarTrigger,
 } from "./ui/sidebar";
 
 const items = [
@@ -48,7 +47,7 @@ const AppSideBar = () => {
       <Sidebar
         variant="sidebar"
         collapsible="icon"
-        className=" h-full absolute top-10 border-t-2"
+        className=" h-full absolute  border-t-2 z-0"
       >
         <SidebarContent>
           <SidebarGroup>

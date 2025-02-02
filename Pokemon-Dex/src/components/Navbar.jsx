@@ -5,7 +5,7 @@ import { Search } from "lucide-react";
 
 const Navbar = () => {
   return (
-    <div className="bg-[#1A1A1D] w-full border-b-2 border-amber-100 text-white flex justify-between h-fit py-1.5 px-6">
+    <div className="bg-[#1A1A1D] w-full border-b-2 border-amber-100 text-white flex justify-between h-fit p-1.5 px-6 ">
       <h1>Pokemon-Dex</h1>
       <div>
         <Input type="text" placeholder="Search Here" className="w-fit" />
