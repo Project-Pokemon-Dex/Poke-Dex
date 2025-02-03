@@ -30,18 +30,16 @@ const HomePage = () => {
   }, []);
   return (
     <>
-      <div className="full">
-        <div className="w-full">
-          <Navbar />
+    <main>
+      <Navbar />
+      <SidebarProvider className="w-full flex-row relative">
+        <AppSideBar />
+        <div className="grid grid-cols-4 gap-2 w-full p-2 bg-[#1A1A1D]">
+          {getData &&
+          getData.map((items, i) => <CardItems key={i} item={items} />)}
         </div>
-        <SidebarProvider className="w-full flex-row relative">
-          <AppSideBar />
-          <div className="grid grid-cols-4 gap-2 w-full">
-            {getData &&
-              getData.map((items, i) => <CardItems key={i} item={items} />)}
-          </div>
-        </SidebarProvider>
-      </div>
+      </SidebarProvider>
+    </main>
     </>
   );
 };
