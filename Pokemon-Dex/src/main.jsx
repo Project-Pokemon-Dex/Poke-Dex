@@ -4,6 +4,8 @@ import "./index.css";
 import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage.jsx";
+import DetailPage from "./pages/DetailPage.jsx";
+
 
 const router = createBrowserRouter([
   {
@@ -12,6 +14,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <HomePage />,
+      },
+      {
+        path: "/pokemon/:name",
+        element: <DetailPage />, 
       },
     ],
   },
