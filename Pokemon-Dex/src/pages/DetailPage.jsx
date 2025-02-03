@@ -1,159 +1,190 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+
 const DetailPage = () => {
-    const pokemon = {
-      name: "Bulbasaur",
-      number: "#0001",
-      types: ["Grass", "Poison"],
-      height: "0.7 m",
-      weight: "6.9 kg",
-      genderRatio: { male: 7, female: 1 },
-      cycles: 20,
-      imageUrl: "https://assets.pokemon.com/assets/cms2/img/pokedex/full//001.png",
-      iconUrl: "https://cdn-icons-png.flaticon.com/512/535/535239.png",
-      evolutionChain: [
-        {
-          name: "Bulbasaur",
-          imageUrl: "https://assets.pokemon.com/assets/cms2/img/pokedex/full//001.png",
-          level: null
-        },
-        {
-          name: "Ivysaur",
-          imageUrl: "https://assets.pokemon.com/assets/cms2/img/pokedex/full//002.png",
-          level: 16
-        },
-        {
-          name: "Venusaur",
-          imageUrl: "https://assets.pokemon.com/assets/cms2/img/pokedex/full//003.png",
-          level: 32
-        }
-      ],
-      stats: {
-        hp: 45,
-        attack: 49,
-        defense: 49,
-        spAttack: 65,
-        spDefense: 65,
-        speed: 45
-      },
-      generation: "I",
-      habitat: "Grassland",
-      captureRate: 45,
-      growthRate: "Medium-slow",
-      evYield: "1 Sp. Attack",
-      baseExp: 64,
-      baseHappiness: 50,
-      weaknesses: ["Flying", "Fire", "Psychic", "Ice"]
+  const { name } = useParams(); 
+  const [pokemon, setPokemon] = useState(null);
+  const [evolutionChain, setEvolutionChain] = useState([]);
+
+  useEffect(() => {
+    const fetchPokemonDetails = async () => {
+      try {
+        // Fetch data dasar Pokémon
+        const { data: pokemonData } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
+        
+        // Fetch data spesies untuk info tambahan dan URL evolusi
+        const { data: speciesData } = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${name}`);
+        
+        // Fetch evolusi menggunakan evolution_chain.url dari speciesData
+        const { data: evolutionData } = await axios.get(speciesData.evolution_chain.url);
+
+        // Set data Pokémon
+        setPokemon({
+          name: pokemonData.name,
+          id: pokemonData.id,
+          types: pokemonData.types.map(typeInfo => typeInfo.type.name),
+          height: pokemonData.height / 10 + " m",
+          weight: pokemonData.weight / 10 + " kg",
+          genderRatio: speciesData.gender_rate >= 0 
+            ? { male: (8 - speciesData.gender_rate) * 12.5, female: speciesData.gender_rate * 12.5 }
+            : { male: "Genderless", female: "" },
+          hatchCycles: speciesData.hatch_counter,
+          imageUrl: pokemonData.sprites.other["official-artwork"].front_default,
+          stats: pokemonData.stats.map(stat => ({
+            name: stat.stat.name,
+            value: stat.base_stat
+          })),
+          generation: speciesData.generation.name.toUpperCase(),
+          habitat: speciesData.habitat ? speciesData.habitat.name : "Unknown",
+          captureRate: speciesData.capture_rate,
+          growthRate: speciesData.growth_rate.name,
+          baseExp: pokemonData.base_experience,
+          baseHappiness: speciesData.base_happiness,
+        });
+
+        // Parsing evolusi dengan level
+        const evoChain = [];
+        let evoData = evolutionData.chain;
+
+        do {
+          evoChain.push({
+            name: evoData.species.name,
+            imageUrl: `https://img.pokemondb.net/artwork/large/${evoData.species.name}.jpg`,
+            minLevel: evoData.evolution_details[0]?.min_level || null // Mendapatkan level evolusi jika ada
+          });
+          evoData = evoData.evolves_to[0];
+        } while (evoData && evoData.hasOwnProperty('evolves_to'));
+
+        setEvolutionChain(evoChain);
+
+      } catch (error) {
+        console.error("Error fetching Pokémon details:", error);
+      }
     };
-  
-    return (
-      <div className="p-10 min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center">
-        {/* Container Detail Pokémon */}
-        <div className="bg-gray-800 p-6 rounded-xl shadow-xl w-[900px] flex flex-col items-center gap-6">
-          
-          {/* Pokémon Details */}
-          <div className="w-full flex gap-20">
-            <div className="flex flex-col">
-              <h1 className="text-2xl font-bold">{pokemon.name}</h1>
-              <p className="text-gray-400">{pokemon.number}</p>
-  
-              <div className="flex flex-col gap-2 mt-2">
-                {pokemon.types.map((type, index) => (
-                  <span key={index} className="flex items-center gap-1 px-2 py-1 rounded-lg">
-                    <img src={pokemon.iconUrl} alt="icon" className="w-4 h-4" /> {type}
-                  </span>
-                ))}
-              </div>
-            </div>
-  
-            <div className="w-1/2 flex justify-center items-center relative">
-              <img src={pokemon.imageUrl} alt={pokemon.name} className="h-80 object-contain" />
-            </div>
-  
-            <div className="border border-gray-600 rounded-lg p-2">
-              <div className="flex flex-col gap-2">
-                <div className="bg-gray-600 p-2 rounded-lg">
-                  <p className="text-gray-400 text-sm">Height</p>
-                  <p className="text-lg font-semibold">{pokemon.height}</p>
-                </div>
-                <div className="bg-gray-700 p-3 rounded-lg">
-                  <p className="text-gray-400 text-sm">Weight</p>
-                  <p className="text-lg font-semibold">{pokemon.weight}</p>
-                </div>
-                <div className="bg-gray-700 p-3 rounded-lg">
-                  <p className="text-gray-400 text-sm">Gender Ratio</p>
-                  <p className="flex items-center gap-2 text-lg font-semibold">
-                    <img src={pokemon.iconUrl} alt="male icon" className="w-4 h-4" /> {pokemon.genderRatio.male} : {pokemon.genderRatio.female}
-                    <img src={pokemon.iconUrl} alt="female icon" className="w-4 h-4" />
-                  </p>
-                </div>
-                <div className="bg-gray-700 p-3 rounded-lg">
-                  <p className="text-gray-400 text-sm">Egg Cycles</p>
-                  <p className="text-lg font-semibold">{pokemon.cycles} cycles</p>
-                </div>
-              </div>
-            </div>
-          </div>
-  
-          {/* Catch Button */}
-          <button className="mt-4 px-6 py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg">
-            Catch
-          </button>
-        </div>
-  
-        {/* Evolution Chain */}
-        <div className="w-[900px] mt-6 bg-gray-800 p-4 rounded-lg border border-gray-600">
-          <h2 className="text-xl font-semibold mb-4">Evolution Chain</h2>
-          <div className="flex items-center justify-center gap-4">
-            {pokemon.evolutionChain.map((evo, index) => (
-              <div key={index} className="flex items-center gap-4">
-                <div className="border border-green-400 p-3 rounded-lg flex flex-col items-center">
-                  <img src={evo.imageUrl} alt={evo.name} className="w-20 h-20 object-contain" />
-                  <p className="font-bold">{evo.name}</p>
-                </div>
-                {index < pokemon.evolutionChain.length - 1 && (
-                  <div className="text-white px-2 py-1 bg-gray-700 rounded-md">
-                    Lv {pokemon.evolutionChain[index + 1].level}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-  
-        {/* Stats, Generation, and Weaknesses */}
-        <div className="w-[900px] mt-6 grid grid-cols-2 gap-4">
-          {/* Stats */}
-          <div className="bg-gray-800 p-4 rounded-lg border border-gray-600">
-            <h2 className="text-xl font-semibold mb-4">Stats</h2>
-            <div className="space-y-2">
-              {Object.entries(pokemon.stats).map(([key, value]) => (
-                <div key={key} className="flex items-center justify-between">
-                  <p className="capitalize">{key.replace(/([A-Z])/g, " $1")}</p>
-                  <div className="w-2/3 bg-gray-700 h-3 rounded-full overflow-hidden">
-                    <div className="bg-green-500 h-full" style={{ width: `${(value / 150) * 100}%` }}></div>
-                  </div>
-                  <p>{value}</p>
-                </div>
+
+    fetchPokemonDetails();
+  }, [name]);
+
+  if (!pokemon) {
+    return <div className="text-white p-10">Loading...</div>;
+  }
+
+  return (
+    <div className="p-10 min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center">
+      {/* Pokémon Details */}
+      <div className="bg-gray-800 p-6 rounded-xl shadow-xl w-[900px] flex flex-col items-center gap-6">
+        <div className="w-full flex gap-20">
+          <div className="flex flex-col">
+            <h1 className="text-2xl font-bold capitalize">{pokemon.name}</h1>
+            <p className="text-gray-400">#{pokemon.id.toString().padStart(4, '0')}</p>
+
+            <div className="flex flex-col gap-2 mt-2">
+              {pokemon.types.map((type, index) => (
+                <span key={index} className="px-2 py-1 bg-green-600 rounded-lg capitalize">
+                  {type}
+                </span>
               ))}
             </div>
-            <p className="text-right mt-2 font-bold">Total: {pokemon.stats.total}</p>
           </div>
-  
-          {/* Generation Info */}
-          <div className="bg-gray-800 p-4 rounded-lg border border-gray-600">
-            <h2 className="text-xl font-semibold mb-4">Generation Info</h2>
-            <p><span className="font-semibold">Generation:</span> {pokemon.generation}</p>
-            <p><span className="font-semibold">Habitat:</span> {pokemon.habitat}</p>
-            <p><span className="font-semibold">Capture Rate:</span> {pokemon.captureRate}</p>
-            <p><span className="font-semibold">Growth Rate:</span> {pokemon.growthRate}</p>
-            <p><span className="font-semibold">EV Yield:</span> {pokemon.evYield}</p>
-            <p><span className="font-semibold">Base Exp:</span> {pokemon.baseExp}</p>
-            <p><span className="font-semibold">Base Happiness:</span> {pokemon.baseHappiness}</p>
+
+          <div className="w-1/2 flex justify-center items-center relative">
+            <img src={pokemon.imageUrl} alt={pokemon.name} className="h-80 object-contain" />
+          </div>
+
+          <div className="border border-gray-600 rounded-lg p-2">
+            <div className="flex flex-col gap-2">
+              <div className="bg-gray-700 p-2 rounded-lg">
+                <p className="text-gray-400 text-sm">Height</p>
+                <p className="text-lg font-semibold">{pokemon.height}</p>
+              </div>
+              <div className="bg-gray-700 p-3 rounded-lg">
+                <p className="text-gray-400 text-sm">Weight</p>
+                <p className="text-lg font-semibold">{pokemon.weight}</p>
+              </div>
+              <div className="bg-gray-700 p-3 rounded-lg">
+                <p className="text-gray-400 text-sm">Gender Ratio</p>
+                {pokemon.genderRatio.male !== "Genderless" ? (
+                  <p className="text-lg font-semibold">
+                     {pokemon.genderRatio.male}% : {pokemon.genderRatio.female}% 
+                  </p>
+                ) : (
+                  <p className="text-lg font-semibold">{pokemon.genderRatio.male}</p>
+                )}
+              </div>
+              <div className="bg-gray-700 p-3 rounded-lg">
+                <p className="text-gray-400 text-sm">Egg Cycles</p>
+                <p className="text-lg font-semibold">{pokemon.hatchCycles}</p>
+              </div>
+            </div>
           </div>
         </div>
+
+        {/* Catch Button */}
+        <button className="px-6 py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg">
+          Catch
+        </button>
       </div>
-    );
-  };
-  
-  export default DetailPage;
-  
+
+      {/* Evolution Chain */}
+      <div className="w-[900px] mt-6 bg-gray-800 p-4 rounded-lg border border-gray-600">
+        <h2 className="text-xl font-semibold mb-4">Evolution Chain</h2>
+        <div className="flex items-center justify-center gap-4">
+          {evolutionChain.map((evo, index) => (
+            <div key={index} className="flex items-center gap-4">
+              <div className="border border-green-400 p-3 rounded-lg flex flex-col items-center">
+                <img src={evo.imageUrl} alt={evo.name} className="w-20 h-20 object-contain" />
+                <p className="font-bold capitalize">{evo.name}</p>
+              </div>
+              {index < evolutionChain.length - 1 && (
+                <div className="text-white px-2 py-1 bg-gray-500">
+                  
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Stats */}
+      <div className=" flex gap-5">
+      <div className="w-[630px] mt-6 bg-gray-800 p-4 rounded-lg border border-gray-600">
+    <h2 className="text-xl font-semibold mb-4">Stats</h2>
+    <div className="space-y-2">
+      {pokemon.stats.map((stat, index) => (
+        <div key={index} className="flex items-center justify-between">
+          <p className="capitalize text-gray-400">{stat.name.replace(/-/g, " ")}</p>
+          <div className="flex items-center w-3/4">
+            {/* Bar chart */}
+            <div className="w-full bg-gray-700 h-3 rounded-full overflow-hidden mr-2">
+              <div 
+                className="bg-green-500 h-full" 
+                style={{ width: `${(stat.value / 150) * 100}%` }}
+              />
+            </div>
+            {/* Stat value */}
+            <p className="text-white">{stat.value}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+        
+        {/* Additional Info */}
+        <div className=" bg-gray-800 mt-6 p-6 rounded-xl shadow-xl">
+          <h3 className="text-xl font-semibold">Additional Info</h3>
+          <ul className="space-y-4 mt-4 text-gray-400">
+            <li><strong>Generation:</strong> {pokemon.generation}</li>
+            <li><strong>Habitat:</strong> {pokemon.habitat}</li>
+            <li><strong>Growth Rate:</strong> {pokemon.growthRate}</li>
+            <li><strong>Base Experience:</strong> {pokemon.baseExp}</li>
+            <li><strong>Capture Rate:</strong> {pokemon.captureRate}</li>
+            <li><strong>Base Happiness:</strong> {pokemon.baseHappiness}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default DetailPage;
