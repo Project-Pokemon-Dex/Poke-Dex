@@ -12,10 +12,10 @@ const CardItems = ({ item }) => {
             <div className="poke-ball gap-2 w-full">
               <div className="flex items-center gap-2 py-1">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/2052px-Pok%C3%A9_Ball_icon.svg.png" style={{width:"32px", height:"32px"}} alt="" />
-                <p className="id-info text-[12px] font-medium text-gray-100">ID:0001</p>
+                <p className="id-info text-[12px] font-medium text-gray-100">#0001</p>
               </div>
               <div className="p-2">
-                <h1 className="pokemon-name w-full font-bold">{item.name}</h1>
+                <h1 className="pokemon-name w-full font-bold capitalize">{item.name}</h1>
                 <p className="type-info text-[14px] text-[#ffcb05] italic font-medium">Grass, Poison</p>
               </div>
             </div>

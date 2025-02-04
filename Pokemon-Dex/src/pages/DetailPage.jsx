@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { EggIcon, RulerIcon, StarIcon, WeightIcon } from "lucide-react";
 
 const DetailPage = () => {
   const { name } = useParams(); 
@@ -73,7 +74,7 @@ const DetailPage = () => {
   return (
     <div className="p-10 min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center">
       {/* Pokémon Details */}
-      <div className="bg-gray-800 p-6 rounded-xl shadow-xl w-[900px] flex flex-col items-center gap-6">
+      <div className="bg-[#1A1A1D] p-6 rounded-xl shadow-xl w-[900px] flex flex-col items-center gap-6 border border-gray-600">
         <div className="w-full flex gap-20">
           <div className="flex flex-col">
             <h1 className="text-2xl font-bold capitalize">{pokemon.name}</h1>
@@ -81,7 +82,7 @@ const DetailPage = () => {
 
             <div className="flex flex-col gap-2 mt-2">
               {pokemon.types.map((type, index) => (
-                <span key={index} className="px-2 py-1 bg-green-600 rounded-lg capitalize">
+                <span key={index} className="px-2 py-2 bg-yellow-600 rounded-lg capitalize items-center font-medium">
                   {type}
                 </span>
               ))}
@@ -94,16 +95,16 @@ const DetailPage = () => {
 
           <div className="border border-gray-600 rounded-lg p-2">
             <div className="flex flex-col gap-2">
-              <div className="bg-gray-700 p-2 rounded-lg">
-                <p className="text-gray-400 text-sm">Height</p>
-                <p className="text-lg font-semibold">{pokemon.height}</p>
+              <div className="bg-green-700 p-2 rounded-lg">
+                <p className="text-white text-sm font-medium flex gap-2 px-1 py-2"><RulerIcon size={20} />Height</p>
+                <p className="text-lg font-semibold px-1 py-1">{pokemon.height}</p>
               </div>
-              <div className="bg-gray-700 p-3 rounded-lg">
-                <p className="text-gray-400 text-sm">Weight</p>
-                <p className="text-lg font-semibold">{pokemon.weight}</p>
+              <div className="bg-green-700 p-3 rounded-lg">
+                <p className="text-white text-sm font-medium flex gap-2 px-1 py-2"><WeightIcon size={20} />Weight</p>
+                <p className="text-lg font-semibold px-1 py-1">{pokemon.weight}</p>
               </div>
-              <div className="bg-gray-700 p-3 rounded-lg">
-                <p className="text-gray-400 text-sm">Gender Ratio</p>
+              <div className="bg-green-700 p-3 rounded-lg">
+                <p className="text-white text-sm font-medium flex gap-2 px-1 py-2 truncate"><StarIcon size={20} />Gender Ratio</p>
                 {pokemon.genderRatio.male !== "Genderless" ? (
                   <p className="text-lg font-semibold">
                      {pokemon.genderRatio.male}% : {pokemon.genderRatio.female}% 
@@ -112,27 +113,27 @@ const DetailPage = () => {
                   <p className="text-lg font-semibold">{pokemon.genderRatio.male}</p>
                 )}
               </div>
-              <div className="bg-gray-700 p-3 rounded-lg">
-                <p className="text-gray-400 text-sm">Egg Cycles</p>
-                <p className="text-lg font-semibold">{pokemon.hatchCycles}</p>
+              <div className="bg-green-700 p-3 rounded-lg">
+                <p className="text-white text-sm font-medium flex gap-2 px-1 py-2"><EggIcon size={20} />Egg Cycles</p>
+                <p className="text-lg font-semibold px-1 py">{pokemon.hatchCycles}</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Catch Button */}
-        <button className="px-6 py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg">
-          Catch
+        <button className="button truncate font-bold" >
+          <div><span>Catch Pokemon</span></div>
         </button>
       </div>
 
       {/* Evolution Chain */}
-      <div className="w-[900px] mt-6 bg-gray-800 p-4 rounded-lg border border-gray-600">
+      <div className="w-[900px] mt-6 bg-[#1A1A1D] p-4 rounded-lg border border-gray-600">
         <h2 className="text-xl font-semibold mb-4">Evolution Chain</h2>
         <div className="flex items-center justify-center gap-4">
           {evolutionChain.map((evo, index) => (
             <div key={index} className="flex items-center gap-4">
-              <div className="border border-green-400 p-3 rounded-lg flex flex-col items-center">
+              <div className="border border-[#ffcb05] p-3 rounded-lg flex flex-col items-center">
                 <img src={evo.imageUrl} alt={evo.name} className="w-20 h-20 object-contain" />
                 <p className="font-bold capitalize">{evo.name}</p>
               </div>
@@ -148,7 +149,7 @@ const DetailPage = () => {
 
       {/* Stats */}
       <div className=" flex gap-5">
-      <div className="w-[630px] mt-6 bg-gray-800 p-4 rounded-lg border border-gray-600">
+      <div className="w-[630px] mt-6 bg-[#1A1A1D] p-4 rounded-lg border border-gray-600">
     <h2 className="text-xl font-semibold mb-4">Stats</h2>
     <div className="space-y-2">
       {pokemon.stats.map((stat, index) => (
@@ -158,7 +159,7 @@ const DetailPage = () => {
             {/* Bar chart */}
             <div className="w-full bg-gray-700 h-3 rounded-full overflow-hidden mr-2">
               <div 
-                className="bg-green-500 h-full" 
+                className="bg-[#ffcb05] h-full" 
                 style={{ width: `${(stat.value / 150) * 100}%` }}
               />
             </div>
@@ -171,7 +172,7 @@ const DetailPage = () => {
   </div>
         
         {/* Additional Info */}
-        <div className=" bg-gray-800 mt-6 p-6 rounded-xl shadow-xl">
+        <div className=" bg-[#1A1A1D] mt-6 p-6 rounded-xl shadow-xl border border-gray-600">
           <h3 className="text-xl font-semibold">Additional Info</h3>
           <ul className="space-y-4 mt-4 text-gray-400">
             <li><strong>Generation:</strong> {pokemon.generation}</li>
