@@ -65,7 +65,7 @@ const HomePage = () => {
         <Navbar searchFeat={searchFeat} />
         <SidebarProvider className="w-full flex-row relative">
           <AppSideBar filterSearch={filterPokemon} />
-          <div className="grid grid-cols-4 gap-2 w-full p-2 bg-[#1A1A1D]">
+          <div className="grid grid-cols-4 gap-2 w-full px-2 py-2 bg-[#1A1A1D]">
             {getData &&
               getData.map((items, i) => <CardItems key={i} item={items} />)}
           </div>
