@@ -13,7 +13,7 @@ const HomePage = () => {
   const getHomeData = async () => {
     try {
       const { data } = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon?limit=500&offset=20`
+        `https://pokeapi.co/api/v2/pokemon?limit=20&offset=20`
       );
       const allData = data.results;
       // karena fetch data api bentuk promise jadi pakai konsep promise all untuk kecepatan data
