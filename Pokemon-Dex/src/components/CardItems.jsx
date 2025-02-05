@@ -1,10 +1,13 @@
 import React from "react";
 import './CardItems.css';
+import bg1 from "../assets/bg1.png";
+
 
 const CardItems = ({ item }) => {
   return (
     <>
     <div className="card-content border-2 grid bg-[#1A1A1D] rounded-xl border-none overflow-hidden">
+      <img src={bg1} className="object-cover" style={{height:"110px", width:"100%"}} alt="" />
       <div className="card-item px-4 py-4 text-xl text-white flex bg bg-neutral-800 gap-8">
         <div className="pokemon-info w-full">
 
