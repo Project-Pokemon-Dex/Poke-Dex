@@ -75,10 +75,17 @@ const DetailPage = () => {
     <div className="p-10 min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center">
       {/* Pokémon Details */}
       <div className="bg-[#1A1A1D] p-6 rounded-xl shadow-xl w-[900px] flex flex-col items-center gap-6 border border-gray-600">
+
         <div className="w-full flex gap-20">
           <div className="flex flex-col">
-            <h1 className="text-2xl font-bold capitalize">{pokemon.name}</h1>
-            <p className="text-gray-400">#{pokemon.id.toString().padStart(4, '0')}</p>
+            <div className="flex items-start gap-3 px-2 py-1">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/2052px-Pok%C3%A9_Ball_icon.svg.png" style={{width:"40px", height:"40px"}} alt="" />
+              <div className="">
+                <h1 className="text-2xl font-bold capitalize">{pokemon.name}</h1>
+                <p className="text-gray-400">#{pokemon.id.toString().padStart(4, '0')}</p>
+              </div>
+            </div>
+
 
             <div className="flex flex-col gap-2 mt-2">
               {pokemon.types.map((type, index) => (
@@ -133,7 +140,7 @@ const DetailPage = () => {
         <div className="flex items-center justify-center gap-4">
           {evolutionChain.map((evo, index) => (
             <div key={index} className="flex items-center gap-4">
-              <div className="border border-[#ffcb05] p-3 rounded-lg flex flex-col items-center">
+              <div className="border border-[#ffcb05] p-3 rounded-lg flex flex-col items-center hover:scale-110 transition duration-500">
                 <img src={evo.imageUrl} alt={evo.name} className="w-20 h-20 object-contain" />
                 <p className="font-bold capitalize">{evo.name}</p>
               </div>
@@ -174,13 +181,13 @@ const DetailPage = () => {
         {/* Additional Info */}
         <div className=" bg-[#1A1A1D] mt-6 p-6 rounded-xl shadow-xl border border-gray-600">
           <h3 className="text-xl font-semibold">Additional Info</h3>
-          <ul className="space-y-4 mt-4 text-gray-400">
-            <li><strong>Generation:</strong> {pokemon.generation}</li>
-            <li><strong>Habitat:</strong> {pokemon.habitat}</li>
-            <li><strong>Growth Rate:</strong> {pokemon.growthRate}</li>
-            <li><strong>Base Experience:</strong> {pokemon.baseExp}</li>
-            <li><strong>Capture Rate:</strong> {pokemon.captureRate}</li>
-            <li><strong>Base Happiness:</strong> {pokemon.baseHappiness}</li>
+          <ul className="space-y-4 mt-4 text-white font-medium">
+            <li><strong className="text-gray-400">Generation:</strong> {pokemon.generation}</li>
+            <li><strong className="text-gray-400">Habitat:</strong> {pokemon.habitat}</li>
+            <li><strong className="text-gray-400">Growth Rate:</strong> {pokemon.growthRate}</li>
+            <li><strong className="text-gray-400">Base Experience:</strong> {pokemon.baseExp}</li>
+            <li><strong className="text-gray-400">Capture Rate:</strong> {pokemon.captureRate}</li>
+            <li><strong className="text-gray-400">Base Happiness:</strong> {pokemon.baseHappiness}</li>
           </ul>
         </div>
       </div>
