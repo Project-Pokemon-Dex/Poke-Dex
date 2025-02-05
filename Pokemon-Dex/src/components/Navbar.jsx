@@ -11,13 +11,16 @@ const Navbar = ({ searchFeat }) => {
           className="w-28 h-10"
           alt="pokemon-logo"
         />
-        <Input
-          type="text"
-          placeholder="Search Pokemon..."
-          className="w-fit bg-neutral-800 text-gray-50000 font-medium border-none outline-none"
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        <button onClick={() => searchFeat(query)}>search</button>
+
+        <div className="flex items-center gap-2 relative">
+          <Input
+            type="text"
+            placeholder="Search Pokemon..."
+            className="w-fit bg-neutral-800 text-gray-500 font-medium border-none outline-none rounded-full pr-14 py-6"
+            onChange={(e) => setQuery(e.target.value)}
+          />
+          <button className="search-btn px-5 py-2 rounded-full bg-[#ffcb05] text-[#292524] font-semibold absolute left-36 text-sm hover:bg-yellow-500" onClick={() => searchFeat(query)}>Search</button>
+        </div>
       </div>
     </nav>
   );
