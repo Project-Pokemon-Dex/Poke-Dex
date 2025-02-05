@@ -10,7 +10,6 @@ import {
   SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarSeparator,
 } from "./ui/sidebar";
 
 import type from "./type";
@@ -42,19 +41,14 @@ const AppSideBar = ({ filterSearch }) => {
 
   return (
     <div>
-      <Sidebar
+      <Sidebar style={{ border: "none" }}
         variant="sidebar"
         collapsible="icon"
-        className=" h-full absolute  border-t-2 z-0"
-      >
-        <SidebarContent>
+        className=" h-full absolute z-0">
+        <SidebarContent style={{ backgroundColor: "#1A1A1D" }}>
           <SidebarGroup>
-            <div className="">
-              <SidebarGroupLabel>Application</SidebarGroupLabel>
-              <SidebarSeparator />
-            </div>
-            <SidebarGroupContent>
-              <SidebarMenu>
+            <SidebarGroupContent style={{ cursor: "none" }}>
+              <SidebarMenu style={{ gap: "12px" }}>
                 {type.map((item) => {
                   // Cari data tipe yang cocok berdasarkan nama
                   const matchingType = typeData.find(
@@ -63,22 +57,22 @@ const AppSideBar = ({ filterSearch }) => {
                   );
 
                   return (
-                    <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton asChild>
-                        <button onClick={() => filterSearch(item.title)}>
+                    <SidebarMenuItem key={item.title} style={{ color: "gray" }}>
+                      <SidebarMenuButton asChild style={{ fontSize: "16px", fontStyle: "normal" }}>
+                        <button className="py-6" onClick={() => filterSearch(item.title)}>
                           {typeof item.icon === "string" ? (
                             <img
                               src={item.icon}
                               alt={item.title}
-                              className="w-6 h-6 mr-2"
+                              className="w-8 h-8 mr-1 font-semibold"
                             />
                           ) : (
-                            <item.icon />
+                            <item.icon/>
                           )}
 
                           <span>{item.title}</span>
 
-                          <SidebarMenuBadge>
+                          <SidebarMenuBadge style={{ fontSize: "16px", fontStyle: "normal", color: "gray", padding: "10px" }}>
                             {matchingType ? matchingType.pokemon.length : ""}
                           </SidebarMenuBadge>
                         </button>

@@ -1,6 +1,5 @@
 import React from "react";
 import './CardItems.css';
-import pokeball from "../assets/pokeball.png";
 import bg1 from "../assets/bg1.png";
 
 
@@ -28,6 +27,7 @@ const CardItems = ({ item }) => {
           </div>
 
           <div className="btn pt-6 pb-1">
+            
             <button className="button truncate w-full font-bold" >
               <div><span>Catch Pokemon</span></div>
             </button>
