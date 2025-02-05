@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { EggIcon, RulerIcon, StarIcon, WeightIcon } from "lucide-react";
-
+import {
+  ArrowLeftIcon,
+  CircleArrowLeft,
+  EggIcon,
+  RulerIcon,
+  SquareChevronLeft,
+  StarIcon,
+  WeightIcon,
+} from "lucide-react";
+import { Link } from "react-router-dom";
+import soundFile from "../components/sound.mp3";
 
 const DetailPage = () => {
   const { name } = useParams();
@@ -10,10 +19,15 @@ const DetailPage = () => {
   const [evolutionChain, setEvolutionChain] = useState([]);
   const [abilities, setAbilities] = useState([]);
 
+  const [audio] = useState(new Audio(soundFile));
+  const handleClick = () => {
+    audio.play();
+  };
+
   useEffect(() => {
     const fetchPokemonDetails = async () => {
       try {
-        // Fetch data dasar Pokémon
+        // Fetch data Pokemon
         const { data: pokemonData } = await axios.get(
           `https://pokeapi.co/api/v2/pokemon/${name}`
         );
@@ -44,7 +58,7 @@ const DetailPage = () => {
         );
         setAbilities(abilitiesData);
 
-        // Set data Pokémon
+        // Set data Pokemon
         setPokemon({
           name: pokemonData.name,
           id: pokemonData.id,
@@ -81,8 +95,8 @@ const DetailPage = () => {
 
           evoChain.push({
             name: evoData.species.name,
-            imageUrl: evoPokemonData.sprites.other.home.front_default, // Gambar resmi dari API
-            minLevel: evoData.evolution_details[0]?.min_level || "—", // Tampilkan "—" jika tidak ada level evolusi
+            imageUrl: evoPokemonData.sprites.other.home.front_default,
+            minLevel: evoData.evolution_details[0]?.min_level || "—",
           });
 
           evoData = evoData.evolves_to[0];
@@ -102,12 +116,22 @@ const DetailPage = () => {
   }
 
   return (
-    <div className="p-10 min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center">
+    <div
+      className="p-10 min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center"
+      onClick={handleClick} // Memanggil handleClick untuk semua klik di halaman
+    >
       {/* Pokémon Details */}
       <div className="bg-[#1A1A1D] p-6 rounded-xl shadow-xl w-[900px] flex flex-col items-center gap-6 border border-gray-600">
         <div className="w-full flex gap-20">
           <div className="flex flex-col">
             <div className="flex items-start gap-3 px-2 py-1">
+              {/* Back Button */}
+              <Link
+                to="/"
+                className=" pt-2 text-white hover:text-yellow-400"
+              >
+                <CircleArrowLeft size={24} />
+              </Link>
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/2052px-Pok%C3%A9_Ball_icon.svg.png"
                 style={{ width: "40px", height: "40px" }}
@@ -123,7 +147,7 @@ const DetailPage = () => {
               </div>
             </div>
 
-            <div className="flex flex-col gap-2 mt-2">
+            <div className="flex flex-col gap-2 mt-2 pl-12">
               {pokemon.types.map((type, index) => (
                 <span
                   key={index}
@@ -142,7 +166,6 @@ const DetailPage = () => {
               className="h-80 object-contain"
             />
           </div>
-          
 
           <div className="border border-gray-600 rounded-lg p-2">
             <div className="flex flex-col gap-2">
@@ -199,11 +222,14 @@ const DetailPage = () => {
           {evolutionChain.map((evo, index) => (
             <div key={index} className="flex items-center gap-4">
               <div className="border border-[#ffcb05] p-3 rounded-lg flex flex-col items-center hover:scale-110 transition duration-500">
-                <img
-                  src={evo.imageUrl}
-                  alt={evo.name}
-                  className="w-20 h-20 object-contain"
-                />
+                {/* Membungkus gambar dengan Link */}
+                <Link to={`/pokemon/${evo.name}`}>
+                  <img
+                    src={evo.imageUrl}
+                    alt={evo.name}
+                    className="w-20 h-20 object-contain"
+                  />
+                </Link>
                 <p className="font-bold capitalize">{evo.name}</p>
               </div>
 
@@ -276,22 +302,25 @@ const DetailPage = () => {
             </li>
           </ul>
         </div>
-        
       </div>
       <div className="w-[900px] mt-6 bg-[#1A1A1D] p-4 rounded-lg border border-gray-600">
-  <h3 className="text-xl font-semibold mb-4">Abilities</h3>
-  <div className="grid grid-cols-2 gap-4">
-    {abilities.map((ability, index) => (
-      <div
-        key={index}
-        className="p-4 border border-[#ffcb05] rounded-lg shadow-lg"
-      >
-        <h4 className="font-semibold text-lg capitalize text-center">{ability.name}</h4>
-        <p className="text-gray-300 text-sm text-justify">{ability.description}</p>
+        <h3 className="text-xl font-semibold mb-4">Abilities</h3>
+        <div className="grid grid-cols-2 gap-4">
+          {abilities.map((ability, index) => (
+            <div
+              key={index}
+              className="py-2 px-4 border border-[#ffcb05] rounded-lg shadow-lg"
+            >
+              <h4 className="font-semibold text-lg capitalize text-center">
+                {ability.name}
+              </h4>
+              <p className="text-gray-300 text-sm text-justify">
+                {ability.description}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
-    ))}
-  </div>
-</div>
     </div>
   );
 };
