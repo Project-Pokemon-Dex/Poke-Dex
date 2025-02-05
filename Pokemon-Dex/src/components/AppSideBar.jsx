@@ -1,5 +1,5 @@
-import React from "react";
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import React, { useEffect, useState } from "react";
+
 import {
   Sidebar,
   SidebarContent,
@@ -13,35 +13,33 @@ import {
   SidebarSeparator,
 } from "./ui/sidebar";
 
-const items = [
-  {
-    title: "Home",
-    url: "#",
-    icon: Home,
-  },
-  {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
-  },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
-];
+import type from "./type";
+import axios from "axios";
 
-const AppSideBar = () => {
+const AppSideBar = ({ filterSearch }) => {
+  const [typeData, setTypeData] = useState([]);
+
+  const getTypeList = async () => {
+    try {
+      const { data } = await axios.get(`https://pokeapi.co/api/v2/type/`);
+      const allData = data.results;
+
+      const typeData = await Promise.all(
+        allData.map(async (item) => {
+          const response = await axios.get(item.url);
+          return response.data;
+        })
+      );
+      setTypeData(typeData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getTypeList();
+  }, []);
+
   return (
     <div>
       <Sidebar
@@ -57,17 +55,37 @@ const AppSideBar = () => {
             </div>
             <SidebarGroupContent>
               <SidebarMenu>
-                {items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <a href={item.url}>
-                        <item.icon />
-                        <span>{item.title}</span>
-                        <SidebarMenuBadge>24</SidebarMenuBadge>
-                      </a>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
+                {type.map((item) => {
+                  // Cari data tipe yang cocok berdasarkan nama
+                  const matchingType = typeData.find(
+                    (data) =>
+                      data.name.toLowerCase() === item.title.toLowerCase()
+                  );
+
+                  return (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton asChild>
+                        <button onClick={() => filterSearch(item.title)}>
+                          {typeof item.icon === "string" ? (
+                            <img
+                              src={item.icon}
+                              alt={item.title}
+                              className="w-6 h-6 mr-2"
+                            />
+                          ) : (
+                            <item.icon />
+                          )}
+
+                          <span>{item.title}</span>
+
+                          <SidebarMenuBadge>
+                            {matchingType ? matchingType.pokemon.length : ""}
+                          </SidebarMenuBadge>
+                        </button>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  );
+                })}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
