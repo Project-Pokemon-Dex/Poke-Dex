@@ -1,12 +1,37 @@
-import React from "react";
-import './CardItems.css';
+import React, { useState } from "react";
+import "./CardItems.css";
 import pokeball from "../assets/pokeball.png";
 import bg1 from "../assets/bg1.png";
-
+import axios from "axios";
 
 const CardItems = ({ item }) => {
+  const [favList, setFavList] = useState([]);
+
+  const favorite = async (pokemon) => {
+    const { data } = await axios.get(`http://localhost:3000/favorite`);
+    const isFavExist = data.some(
+      (item) => String(item.id) === String(pokemon.id)
+    );
+
+    if (isFavExist) {
+      alert("its already in there");
+      return;
+    }
+    try {
+      console.log(isFavExist);
+      const pokemonToAdd = { ...pokemon, id: String(pokemon.id) };
+
+      await axios.post("http://localhost:3000/favorite", pokemonToAdd);
+
+      setFavList(pokemonToAdd);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
+
     <div className="card-content border-2 grid bg-[#1A1A1D] rounded-xl border-none overflow-hidden hover:scale-95 transition duration-500">
       <img src={bg1} className="object-cover" style={{height:"110px", width:"100%"}} alt="" />
       <div className="card-item px-4 py-4 text-xl text-white flex bg bg-neutral-800 gap-8 ">
@@ -23,19 +48,27 @@ const CardItems = ({ item }) => {
                 {/* <p className="type-info text-[14px] text-[#ffcb05] italic font-medium">{item.types[1].type.name}</p> */}
 
               </div>
+              <img
+                className="pokemon-image hover:scale-110 transition duration-500"
+                src={item.sprites.other.home.front_default}
+                style={{ width: "100px", height: "100px" }}
+                alt="pokemon-char"
+              />
             </div>
-            <img className="pokemon-image hover:scale-110 transition duration-500" src={item.sprites.other.home.front_default} style={{width:"100px", height:"100px"}} alt="pokemon-char" />
-          </div>
 
-          <div className="btn pt-6 pb-1">
-            <button className="button truncate w-full font-bold" >
-              <div><span>Catch Pokemon</span></div>
-            </button>
+            <div className="btn pt-6 pb-1">
+              <button
+                className="button truncate w-full font-bold"
+                onClick={() => favorite(item)}
+              >
+                <div>
+                  <span>Catch Pokemon</span>
+                </div>
+              </button>
+            </div>
           </div>
-          
         </div>
       </div>
-    </div>
     </>
   );
 };

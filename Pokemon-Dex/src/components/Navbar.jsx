@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Input } from "./ui/input";
+import { Link } from "react-router-dom";
 
 const Navbar = ({ searchFeat }) => {
   const [query, setQuery] = useState("");
@@ -18,9 +19,16 @@ const Navbar = ({ searchFeat }) => {
             className="w-fit bg-neutral-800 text-gray-500 font-medium border-none outline-none rounded-full pr-14 py-6"
             onChange={(e) => setQuery(e.target.value)}
           />
-          <button className="search-btn px-5 py-2 rounded-full bg-[#ffcb05] text-[#292524] font-semibold absolute left-36 text-sm hover:bg-yellow-500" onClick={() => searchFeat(query)}>Search</button>
+          <button
+            className="search-btn px-5 py-2 rounded-full bg-[#ffcb05] text-[#292524] font-semibold absolute left-36 text-sm hover:bg-yellow-500"
+            onClick={() => searchFeat(query)}
+          >
+            Search
+          </button>
         </div>
-
+        <Link to={"/alamak"}>
+          <button>fav</button>
+        </Link>
       </div>
     </nav>
   );
