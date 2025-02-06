@@ -107,7 +107,7 @@ const DetailPage = () => {
         console.error("Error fetching Pokémon details:", error);
       }
     };
-
+    console.log(evolutionChain);
     fetchPokemonDetails();
   }, [name]);
 
