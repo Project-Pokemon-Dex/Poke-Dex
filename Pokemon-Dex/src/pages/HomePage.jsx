@@ -17,7 +17,6 @@ const HomePage = () => {
     try {
       const { data } = await axios.get(
         `https://pokeapi.co/api/v2/pokemon?limit=20&offset=0`
-
       );
       const allData = data.results;
       // karena fetch data api bentuk promise jadi pakai konsep promise all untuk kecepatan data
@@ -88,16 +87,23 @@ const HomePage = () => {
   // fungsi menambahkan favorite
 
   useEffect(() => {
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
     getHomeData();
+    return () => {
+      // Kembalikan scrollbar saat keluar dari homepage
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
   }, []);
 
   return (
     <>
-      <main>
+      <main className="homePage">
         <Navbar searchFeat={searchFeat} className="sticky" />
         <SidebarProvider className="w-full flex-row relative">
           <AppSideBar filterSearch={filterPokemon} className="sticky" />
-          <div id="scrollableDiv" className="h-[100vh] overflow-auto">
+          <div id="scrollableDiv" className="h-[100vh] overflow-auto w-full">
             <InfiniteScroll
               dataLength={getData.length}
               hasMore={hasMore}

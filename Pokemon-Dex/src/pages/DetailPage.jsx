@@ -107,7 +107,7 @@ const DetailPage = () => {
         console.error("Error fetching Pokémon details:", error);
       }
     };
-
+    console.log(evolutionChain);
     fetchPokemonDetails();
   }, [name]);
 
@@ -126,10 +126,7 @@ const DetailPage = () => {
           <div className="flex flex-col">
             <div className="flex items-start gap-3 px-2 py-1">
               {/* Back Button */}
-              <Link
-                to="/"
-                className=" pt-2 text-white hover:text-yellow-400"
-              >
+              <Link to="/" className=" pt-2 text-white hover:text-yellow-400">
                 <CircleArrowLeft size={24} />
               </Link>
               <img

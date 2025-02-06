@@ -1,9 +1,3 @@
-html,
-body {
-  height: 100%;
-  overflow: hidden; /* Hapus scrollbar utama */
-}
-
 .button {
   --stone-50: #fafaf9;
   --stone-800: #292524;
