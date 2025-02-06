@@ -3,6 +3,7 @@ import "./CardItems.css";
 import pokeball from "../assets/pokeball.png";
 import bg1 from "../assets/bg1.png";
 import axios from "axios";
+import sound2 from "../components/sound2.mp3";
 
 const CardItems = ({ item }) => {
   const [favList, setFavList] = useState([]);
@@ -28,6 +29,10 @@ const CardItems = ({ item }) => {
       console.log(error);
     }
   };
+
+    function play(){
+      new Audio(sound2).play()
+    }
 
   return (
     <>
@@ -61,19 +66,19 @@ const CardItems = ({ item }) => {
                   </p>
                   {/* <p className="type-info text-[14px] text-[#ffcb05] italic font-medium">{item.types[1].type.name}</p> */}
                 </div>
+              </div>
                 <img
                   className="pokemon-image hover:scale-110 transition duration-500"
                   src={item.sprites.other.home.front_default}
                   style={{ width: "100px", height: "100px" }}
                   alt="pokemon-char"
                 />
-              </div>
             </div>
             
             <div className="btn pt-6 pb-1">
               <button
                 className="button truncate w-full font-bold"
-                onClick={() => favorite(item)}
+                onClick={() => {favorite(item),play()}}
               >
                 <div>
                   <span>Catch Pokemon</span>
