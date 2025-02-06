@@ -69,7 +69,7 @@ const CardItems = ({ item }) => {
                 />
               </div>
             </div>
-
+            
             <div className="btn pt-6 pb-1">
               <button
                 className="button truncate w-full font-bold"
