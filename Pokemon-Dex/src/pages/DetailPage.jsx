@@ -96,7 +96,7 @@ const DetailPage = () => {
           evoChain.push({
             name: evoData.species.name,
             imageUrl: evoPokemonData.sprites.other.home.front_default,
-            minLevel: evoData.evolution_details[0]?.min_level || "—",
+            minLevel: evoData.evolution_details[0]?.min_level || "--",
           });
 
           evoData = evoData.evolves_to[0];
@@ -118,7 +118,6 @@ const DetailPage = () => {
   return (
     <div
       className="p-4 sm:p-10 min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center"
-      onClick={handleClick} // Memanggil handleClick untuk semua klik di halaman
     >
       {/* Pokémon Details */}
       <div className="bg-[#1A1A1D] p-6 rounded-xl shadow-xl max-w-[900px] w-full flex flex-col items-center gap-6 border border-gray-600">
@@ -202,7 +201,8 @@ const DetailPage = () => {
         </div>
 
         {/* Catch Button */}
-        <button className="button truncate font-bold w-full sm:w-auto">
+        <button className="button truncate font-bold w-full sm:w-auto"
+        onClick={handleClick}>
           <div>
             <span>Catch Pokemon</span>
           </div>
