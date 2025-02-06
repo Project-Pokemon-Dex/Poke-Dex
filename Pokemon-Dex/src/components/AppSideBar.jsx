@@ -66,7 +66,8 @@ const AppSideBar = ({ filterSearch }) => {
                               alt={item.title}
                               className="w-8 h-8 mr-1 font-semibold"
                             />
-                          ) : (
+                          ) : 
+                          (
                             <item.icon/>
                           )}
 
