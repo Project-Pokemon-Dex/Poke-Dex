@@ -5,6 +5,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage.jsx";
 import DetailPage from "./pages/DetailPage.jsx";
 import Favorite from "./pages/Favorite";
+import FilterPage from "./pages/FilterPage";
+import SearchFilterPage from "./pages/SearchFilterPage";
 
 const router = createBrowserRouter([
   {
@@ -18,11 +20,20 @@ const router = createBrowserRouter([
         path: "/favorite",
         element: <Favorite />,
       },
+
       {
-        path: "/pokemon/:name",
-        element: <DetailPage />,
+        path: "/:id",
+        element: <FilterPage />,
+      },
+      {
+        path: "/search?",
+        element: <SearchFilterPage />,
       },
     ],
+  },
+  {
+    path: "/pokemon/:name",
+    element: <DetailPage />,
   },
 ]);
 
