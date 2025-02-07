@@ -13,16 +13,16 @@ import {
 } from "./ui/sidebar";
 
 import type from "./type";
-import axios from "axios";
 import { Link } from "react-router-dom";
 
-const AppSideBar = ({ filterSearch }) => {
+const AppSideBar = () => {
   return (
     <div>
       <Sidebar
         style={{ border: "none" }}
         variant="sidebar"
-        className=" h-full absolute z-0"
+        collapsible="icon"
+        className=" h-full absolute z-0 hidden"
       >
         <SidebarContent style={{ backgroundColor: "#1A1A1D" }}>
           <SidebarGroup>
