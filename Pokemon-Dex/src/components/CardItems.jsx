@@ -5,6 +5,7 @@ import bg1 from "../assets/bg1.png";
 import axios from "axios";
 import sound2 from "../components/sound2.mp3";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 const CardItems = ({ item }) => {
   const [favList, setFavList] = useState([]);
@@ -17,7 +18,7 @@ const CardItems = ({ item }) => {
     );
 
     if (isFavExist) {
-      alert("its already in there");
+      toast.error("It's already in there!");
       return;
     }
     try {
@@ -26,8 +27,10 @@ const CardItems = ({ item }) => {
       await axios.post("http://localhost:3000/favorite", pokemonToAdd);
 
       setFavList(pokemonToAdd);
+      toast.success("Pokemon added to favorites!");
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong!");
     }
   };
 

@@ -29,7 +29,7 @@ const Navbar = ({ searchFeat }) => {
             >
               <img
                 src={Pokedex}
-                className="md:w-[30px] md:h-30px w-[18px] h-[18px]"
+                className="md:w-[30px] md:h-30px w-[24px] h-[24px]"
               />
               <button className="text-white md:text-[14px] text-[8px] ">
                 My Pokemon
