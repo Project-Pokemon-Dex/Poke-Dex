@@ -25,7 +25,7 @@ const Navbar = ({ searchFeat }) => {
           <Link to={"/favorite"}>
             <button
               onClick={play}
-              className="menu-favorite flex items-center gap-3 font-medium bg-blue-800 md:px-3 md:py-1 px-2 py-0.5 rounded-lg hover:bg-blue-700 mt-2.5"
+              className="menu-favorite flex items-center gap-3 font-medium bg-blue-800 md:px-3 md:py-3 px-2 py-1.5 rounded-lg hover:bg-blue-700 md:mt-1 mt-1.5"
             >
               <img
                 src={Pokedex}
