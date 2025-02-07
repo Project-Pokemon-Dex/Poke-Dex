@@ -14,37 +14,38 @@ const Navbar = ({ searchFeat }) => {
 
   return (
     <nav>
-      <div className="bg-[#1A1A1D] w-full border-amber-100 text-white flex justify-between h-fit p-4 px-16">
+      <div className="bg-[#1A1A1D] w-full border-amber-100 text-white flex justify-between h-fit p-4 md:px-16">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/1200px-International_Pok%C3%A9mon_logo.svg.png"
-          className="w-28 h-10"
+          className="md:w-28 md:h-10  w-20 h-10 object-contain"
           alt="pokemon-logo"
         />
 
-        <div className="flex gap-5">
-          <button
-            onClick={play}
-            className="menu-favorite flex items-center gap-3 font-medium bg-blue-800 px-3 py-1 rounded-lg hover:bg-blue-700"
-          >
-            <img
-              src={Pokedex}
-              style={{ width: "30px", height: "30px" }}
-              alt=""
-            />
-            <Link to={"/favorite"}>
-              <button className="text-white text-[14px]">My Pokemon</button>
-            </Link>
-          </button>
+        <div className="flex md:gap-5 gap-2 ">
+          <Link to={"/favorite"}>
+            <button
+              onClick={play}
+              className="menu-favorite flex items-center gap-3 font-medium bg-blue-800 md:px-3 md:py-1 px-2 py-0.5 rounded-lg hover:bg-blue-700 mt-2.5"
+            >
+              <img
+                src={Pokedex}
+                className="md:w-[30px] md:h-30px w-[18px] h-[18px]"
+              />
+              <button className="text-white md:text-[14px] text-[8px] ">
+                My Pokemon
+              </button>
+            </button>
+          </Link>
 
           <div className="flex items-center gap-2 relative">
             <Input
               type="text"
               placeholder="Search Pokemon..."
-              className="w-fit bg-neutral-800 text-gray-500 font-medium border-none outline-none rounded-full pr-14 py-6"
+              className="w-fit bg-neutral-800 text-gray-500 font-medium border-none outline-none rounded-full md:pr-14 md:py-6 text-[9px] md:text-lg py-1 px-4"
               onChange={(e) => setQuery(e.target.value)}
             />
             <button
-              className="search-btn px-5 py-2 rounded-full bg-[#ffcb05] text-[#292524] font-semibold absolute left-36 text-sm hover:bg-yellow-500"
+              className="search-btn md:px-5 md:py-2 px-1.5 py-1 rounded-full bg-[#ffcb05] text-[#292524] font-semibold absolute md:left-48 left-24 md:text-sm text-[8px] hover:bg-yellow-500"
               onClick={() => {
                 searchFeat(query), navigate(`/search?=${query}`);
               }}
