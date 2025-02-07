@@ -30,13 +30,13 @@ const CardItems = ({ item }) => {
     }
   };
 
-    function play(){
-      new Audio(sound2).play()
-    }
+  function play() {
+    new Audio(sound2).play();
+  }
 
   return (
     <>
-      <div className="card-content border-2 grid bg-[#1A1A1D] rounded-xl border-none overflow-hidden hover:scale-95 transition duration-500 w-full">
+      <div className="card-content border-2 grid bg-[#1A1A1D] rounded-xl border-none overflow-hidden hover:scale-95 transition duration-500 w-full h-full">
         <img
           src={bg1}
           className="object-cover"
@@ -67,18 +67,20 @@ const CardItems = ({ item }) => {
                   {/* <p className="type-info text-[14px] text-[#ffcb05] italic font-medium">{item.types[1].type.name}</p> */}
                 </div>
               </div>
-                <img
-                  className="pokemon-image hover:scale-110 transition duration-500"
-                  src={item.sprites.other.home.front_default}
-                  style={{ width: "100px", height: "100px" }}
-                  alt="pokemon-char"
-                />
+              <img
+                className="pokemon-image hover:scale-110 transition duration-500"
+                src={item.sprites.other.home.front_default}
+                style={{ width: "100px", height: "100px" }}
+                alt="pokemon-char"
+              />
             </div>
-            
+
             <div className="btn pt-6 pb-1">
               <button
                 className="button truncate w-full font-bold"
-                onClick={() => {favorite(item),play()}}
+                onClick={() => {
+                  favorite(item), play();
+                }}
               >
                 <div>
                   <span>Catch Pokemon</span>

@@ -32,13 +32,8 @@ const Favorite = () => {
   };
 
   return (
-    <div>
-      <Link to={"/"}>
-        <button className="bg-yellow-300 text-white rounded-sm my-6 mx-4">
-          Back to Home
-        </button>
-      </Link>
-      <div className="grid grid-cols-4 gap-2 mx-3">
+    <div className="bg-[#1A1A1D] w-full">
+      <div className="grid grid-cols-4 gap-2 px-4   py-2">
         {fav.length > 0 &&
           fav.map((item, i) => (
             <FavoriteCardItem key={i} item={item} handleDel={deleteData} />

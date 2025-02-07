@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Input } from "./ui/input";
 import { Link } from "react-router-dom";
 import Pokedex from "../assets/Pokedex.png";
@@ -6,9 +6,9 @@ import sound2 from "../components/sound2.mp3";
 
 const Navbar = ({ searchFeat }) => {
   const [query, setQuery] = useState("");
-  
-  function play(){
-    new Audio(sound2).play()
+
+  function play() {
+    new Audio(sound2).play();
   }
 
   return (
@@ -21,9 +21,16 @@ const Navbar = ({ searchFeat }) => {
         />
 
         <div className="flex gap-5">
-          <button onClick={play} className="menu-favorite flex items-center gap-3 font-medium bg-blue-800 px-3 py-1 rounded-lg hover:bg-blue-700">
-            <img src={Pokedex} style={{width:"30px",height:"30px"}} alt="" />
-            <Link to={"/alamak"}>
+          <button
+            onClick={play}
+            className="menu-favorite flex items-center gap-3 font-medium bg-blue-800 px-3 py-1 rounded-lg hover:bg-blue-700"
+          >
+            <img
+              src={Pokedex}
+              style={{ width: "30px", height: "30px" }}
+              alt=""
+            />
+            <Link to={"/favorite"}>
               <button className="text-white text-[14px]">My Pokemon</button>
             </Link>
           </button>
