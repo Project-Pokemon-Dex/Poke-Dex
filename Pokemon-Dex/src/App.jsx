@@ -12,8 +12,7 @@ function App() {
   const [offset, setOffset] = useState(10);
   const [isLoad, setIsLoad] = useState(false);
   const [isQuery, setIsQuery] = useState(false);
-
-  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState([]);
 
   const getHomeData = async () => {
     try {
@@ -74,7 +73,7 @@ function App() {
       getHomeData();
       return;
     }
-    navigate(`/?search=${query}`);
+
     setIsLoad(true);
 
     const { data } = await axios.get(

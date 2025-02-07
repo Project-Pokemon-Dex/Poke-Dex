@@ -1,12 +1,13 @@
 import React, { useContext, useState } from "react";
 import { Input } from "./ui/input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Pokedex from "../assets/Pokedex.png";
 import sound2 from "../components/sound2.mp3";
 
 const Navbar = ({ searchFeat }) => {
   const [query, setQuery] = useState("");
 
+  const navigate = useNavigate();
   function play() {
     new Audio(sound2).play();
   }
@@ -44,7 +45,9 @@ const Navbar = ({ searchFeat }) => {
             />
             <button
               className="search-btn px-5 py-2 rounded-full bg-[#ffcb05] text-[#292524] font-semibold absolute left-36 text-sm hover:bg-yellow-500"
-              onClick={() => searchFeat(query)}
+              onClick={() => {
+                searchFeat(query), navigate(`/search?=${query}`);
+              }}
             >
               Search
             </button>
