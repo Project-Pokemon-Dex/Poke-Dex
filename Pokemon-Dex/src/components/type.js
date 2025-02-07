@@ -18,11 +18,13 @@ import rock from "../assets/type-icons/rock.svg";
 import steel from "../assets/type-icons/steel.svg";
 import water from "../assets/type-icons/water.svg";
 
+import home from "../assets/type-icons/5579233.png";
+
 const type = [
   {
     title: "home",
     url: "",
-    icon: bug,
+    icon: home,
   },
   {
     title: "Bug",

@@ -18,10 +18,32 @@ const DetailPage = () => {
   const [pokemon, setPokemon] = useState(null);
   const [evolutionChain, setEvolutionChain] = useState([]);
   const [abilities, setAbilities] = useState([]);
+  const [favList, setFavList] = useState([]);
+  const [pokemonDataList, setPokemonDataList] = useState([]);
 
   const [audio] = useState(new Audio(soundFile));
-  const handleClick = () => {
+  const handleClick = async (item) => {
+    console.log(pokemonDataList);
     audio.play();
+    const { data } = await axios.get(`http://localhost:3000/favorite`);
+    const isFavExist = data.some(
+      (item) => String(item.id) === String(pokemon.id)
+    );
+
+    if (isFavExist) {
+      alert("its already in there");
+      return;
+    }
+    try {
+      console.log(isFavExist);
+      const pokemonToAdd = { ...item, id: String(item.id) };
+
+      await axios.post("http://localhost:3000/favorite", pokemonToAdd);
+
+      setFavList(pokemonToAdd);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -31,7 +53,7 @@ const DetailPage = () => {
         const { data: pokemonData } = await axios.get(
           `https://pokeapi.co/api/v2/pokemon/${name}`
         );
-
+        setPokemonDataList(pokemonData);
         // Fetch data spesies untuk info tambahan dan URL evolusi
         const { data: speciesData } = await axios.get(
           `https://pokeapi.co/api/v2/pokemon-species/${name}`
@@ -116,9 +138,7 @@ const DetailPage = () => {
   }
 
   return (
-    <div
-      className="p-4 sm:p-10 min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center"
-    >
+    <div className="p-4 sm:p-10 min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center">
       {/* Pokémon Details */}
       <div className="bg-[#1A1A1D] p-6 rounded-xl shadow-xl max-w-[900px] w-full flex flex-col items-center gap-6 border border-gray-600">
         <div className="w-full flex flex-col md:flex-row gap-6 md:gap-20">
@@ -201,8 +221,10 @@ const DetailPage = () => {
         </div>
 
         {/* Catch Button */}
-        <button className="button truncate font-bold w-full sm:w-auto"
-        onClick={handleClick}>
+        <button
+          className="button truncate font-bold w-full sm:w-auto"
+          onClick={() => handleClick(pokemonDataList)}
+        >
           <div>
             <span>Catch Pokemon</span>
           </div>

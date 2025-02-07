@@ -23,7 +23,6 @@ const Favorite = () => {
   //   fungsi delete item dari favorite
   const deleteData = async (pokemonId) => {
     try {
-      console.log(pokemonId);
       await axios.delete(`http://localhost:3000/favorite/${pokemonId}`);
       setFav((prevFav) => prevFav.filter((item) => item.id !== pokemonId));
     } catch (error) {

@@ -12,7 +12,6 @@ function App() {
   const [offset, setOffset] = useState(10);
   const [isLoad, setIsLoad] = useState(false);
   const [isQuery, setIsQuery] = useState(false);
-  const [searchQuery, setSearchQuery] = useState([]);
 
   const getHomeData = async () => {
     try {
