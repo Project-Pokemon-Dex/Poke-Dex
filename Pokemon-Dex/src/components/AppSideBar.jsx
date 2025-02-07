@@ -22,7 +22,6 @@ const AppSideBar = ({ filterSearch }) => {
       <Sidebar
         style={{ border: "none" }}
         variant="sidebar"
-        collapsible="icon"
         className=" h-full absolute z-0"
       >
         <SidebarContent style={{ backgroundColor: "#1A1A1D" }}>

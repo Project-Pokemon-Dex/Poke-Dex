@@ -11,7 +11,7 @@ const FavoriteCardItem = ({ item, handleDel }) => {
       />
       <div className="card-item px-4 py-4 text-xl text-white flex bg bg-neutral-800 gap-8 ">
         <div className="pokemon-info w-full">
-          <div className="title-pokemon flex items-start gap-10 item ">
+          <div className="title-pokemon flex items-start gap-3 item ">
             <div className="poke-ball gap-2 w-full">
               <div className="flex items-center gap-2 py-1">
                 <img
@@ -20,16 +20,23 @@ const FavoriteCardItem = ({ item, handleDel }) => {
                   alt=""
                 />
                 <p className="id-info text-[12px] font-medium text-gray-100">
-                  #0001
+                  #00{item.id}
                 </p>
               </div>
               <div className="p-2">
                 <h1 className="pokemon-name w-full font-bold capitalize">
                   {item.name}
                 </h1>
-                <p className="type-info text-[14px] text-[#ffcb05] italic font-medium">
-                  Grass, Poison
-                </p>
+                <div className="flex gap-2">
+                  {item.types.map((type, i) => (
+                    <p
+                      key={i}
+                      className="type-info text-[14px] text-[#ffcb05] italic font-medium"
+                    >
+                      {type.type.name}
+                    </p>
+                  ))}
+                </div>
               </div>
             </div>
             <img
