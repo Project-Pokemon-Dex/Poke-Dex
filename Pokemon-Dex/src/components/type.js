@@ -22,7 +22,7 @@ import home from "../assets/type-icons/5579233.png";
 
 const type = [
   {
-    title: "home",
+    title: "Home",
     url: "",
     icon: home,
   },

@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import AppSideBar from "@/components/AppSideBar";
 import { createContext, useState } from "react";
 import axios from "axios";
@@ -117,7 +117,7 @@ function App() {
       >
         <Navbar className="sticky" searchFeat={searchFeat} />
         <SidebarProvider className="  w-full flex-row relative ">
-          <AppSideBar className="sticky" />
+          <AppSideBar className="sticky " />
           <Outlet />
         </SidebarProvider>
       </query.Provider>

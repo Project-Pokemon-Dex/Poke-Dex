@@ -32,7 +32,7 @@ const Favorite = () => {
 
   return (
     <div className="bg-[#1A1A1D] w-full">
-      <div className="grid grid-cols-4 gap-2 px-4   py-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-5 py-4">
         {fav.length > 0 &&
           fav.map((item, i) => (
             <FavoriteCardItem key={i} item={item} handleDel={deleteData} />

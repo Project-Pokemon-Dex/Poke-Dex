@@ -1,10 +1,11 @@
 import { query } from "@/App";
 import CardItems from "@/components/CardItems";
 import Loading from "@/components/Loading";
+import type from "@/components/type";
 
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const FilterPage = () => {
   const [data, setData] = useState([]);
@@ -46,10 +47,20 @@ const FilterPage = () => {
 
   return (
     <div className="h-screen overflow-y-auto bg-[#1A1A1D] w-full">
+      <div className="flex gap-3 overflow-x-auto text-white md:hidden custom-scroll">
+        {type &&
+          type.map((genre) => (
+            <Link to={`/${genre.url}`}>
+              <button className="rounded-full text-xs border-[#facc15] border px-5 py-1 hover:bg-[#facc15] hover:text-white font-medium">
+                {genre.title}
+              </button>
+            </Link>
+          ))}
+      </div>
       {isLoad ? (
         <Loading />
       ) : (
-        <div className="grid grid-cols-4 gap-4 w-full px-5 py-12 bg-[#1A1A1D] overflow-auto">
+        <div className=" w-full  bg-[#1A1A1D] overflow-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-5 py-4">
           {data &&
             data.map((items) => <CardItems key={items.id} item={items} />)}
         </div>

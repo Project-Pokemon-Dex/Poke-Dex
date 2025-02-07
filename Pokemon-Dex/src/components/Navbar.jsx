@@ -29,9 +29,9 @@ const Navbar = ({ searchFeat }) => {
             >
               <img
                 src={Pokedex}
-                className="md:w-[30px] md:h-30px w-[18px] h-[18px]"
+                className="md:w-[30px] md:h-30px w-[22px] h-[22px]"
               />
-              <button className="text-white md:text-[14px] text-[8px] ">
+              <button className="text-white md:text-[14px] text-[12px] ">
                 My Pokemon
               </button>
             </button>
@@ -41,11 +41,11 @@ const Navbar = ({ searchFeat }) => {
             <Input
               type="text"
               placeholder="Search Pokemon..."
-              className="w-fit bg-neutral-800 text-gray-500 font-medium border-none outline-none rounded-full md:pr-14 md:py-6 text-[9px] md:text-lg py-1 px-4"
+              className="w-fit bg-neutral-800 text-gray-500 font-medium border-none outline-none rounded-full md:pr-14 md:py-6 text-[11px] md:text-lg py-1 px-4"
               onChange={(e) => setQuery(e.target.value)}
             />
             <button
-              className="search-btn md:px-5 md:py-2 px-1.5 py-1 rounded-full bg-[#ffcb05] text-[#292524] font-semibold absolute md:left-48 left-24 md:text-sm text-[8px] hover:bg-yellow-500"
+              className="search-btn md:px-5 md:py-2 px-1.5 py-1 rounded-full bg-[#ffcb05] text-[#292524] font-semibold absolute md:left-48 left-24 md:text-sm text-[11px] hover:bg-yellow-500"
               onClick={() => {
                 searchFeat(query), navigate(`/search?=${query}`);
               }}
