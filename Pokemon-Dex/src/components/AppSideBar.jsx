@@ -33,6 +33,7 @@ const AppSideBar = () => {
                     <SidebarMenuButton
                       asChild
                       style={{ fontSize: "16px", fontStyle: "normal" }}
+                      className="pt-6 pb-6"
                     >
                       <Link to={`/${item.url}`}>
                         <img
