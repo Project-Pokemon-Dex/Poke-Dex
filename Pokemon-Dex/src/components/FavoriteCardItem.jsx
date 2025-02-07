@@ -1,9 +1,12 @@
 import React from "react";
 import bg1 from "../assets/bg1.png";
+import { useNavigate } from "react-router-dom";
 
 const FavoriteCardItem = ({ item, handleDel }) => {
+  const navigate = useNavigate();
   return (
-    <div className="card-content border-2 grid bg-[#1A1A1D] rounded-xl border-none overflow-hidden hover:scale-95 transition duration-500">
+    <div className="card-content border-2 grid bg-[#1A1A1D] rounded-xl border-none overflow-hidden hover:scale-95 transition duration-500"
+    >
       <img
         src={bg1}
         className="object-cover"
@@ -50,8 +53,10 @@ const FavoriteCardItem = ({ item, handleDel }) => {
           <div className="btn pt-6 pb-1">
             <button
               className="button truncate w-full font-bold"
-              onClick={() => handleDel(item.id.toString())}
+              onClick={(e) => {e.stopPropagation();
+                handleDel(item.id.toString())}}
             >
+              
               <div>
                 <span>Delete</span>
               </div>

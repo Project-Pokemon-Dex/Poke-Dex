@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import soundFile from "../components/sound2.mp3";
+import { toast, ToastContainer } from "react-toastify";
 
 const DetailPage = () => {
   const { name } = useParams();
@@ -31,7 +32,7 @@ const DetailPage = () => {
     );
 
     if (isFavExist) {
-      alert("its already in there");
+      toast.error("It's already in there!");
       return;
     }
     try {
@@ -41,8 +42,10 @@ const DetailPage = () => {
       await axios.post("http://localhost:3000/favorite", pokemonToAdd);
 
       setFavList(pokemonToAdd);
+      toast.success("Pokemon added to favorites!");
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong!");
     }
   };
 
@@ -138,7 +141,9 @@ const DetailPage = () => {
   }
 
   return (
+    
     <div className="p-4 sm:p-10 min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center">
+      <ToastContainer />
       {/* Pokémon Details */}
       <div className="bg-[#1A1A1D] p-6 rounded-xl shadow-xl max-w-[900px] w-full flex flex-col items-center gap-6 border border-gray-600">
         <div className="w-full flex flex-col md:flex-row gap-6 md:gap-20">
@@ -244,11 +249,11 @@ const DetailPage = () => {
                   <img
                     src={evo.imageUrl}
                     alt={evo.name}
-                    className="w-16 h-16 sm:w-20 sm:h-20 object-contain"
+                    className="w-16 h-16 sm:w-20 sm:h-20 object-contain pb-2"
                   />
                 </Link>
                 <p className="font-bold capitalize text-center">{evo.name}</p>
-                <p className="text-center text-xs uppercase">{pokemon.generation}</p>
+                <p className="text-center text-[10px] font-medium uppercase">{pokemon.generation}</p>
               </div>
               {index < evolutionChain.length - 1 && (
                 <div className="flex flex-col sm:flex-row items-center text-white">

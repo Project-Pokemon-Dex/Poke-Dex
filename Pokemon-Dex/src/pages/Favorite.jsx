@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import bg1 from "../assets/bg1.png";
 import { Link } from "react-router-dom";
 import FavoriteCardItem from "@/components/FavoriteCardItem";
+import { toast } from "react-toastify";
 
 const Favorite = () => {
   const [fav, setFav] = useState([]);
@@ -25,6 +26,7 @@ const Favorite = () => {
     try {
       await axios.delete(`http://localhost:3000/favorite/${pokemonId}`);
       setFav((prevFav) => prevFav.filter((item) => item.id !== pokemonId));
+      toast.success("Pokemon removed from favorites!");
     } catch (error) {
       console.log(error);
     }

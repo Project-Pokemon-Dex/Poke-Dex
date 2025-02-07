@@ -4,6 +4,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import AppSideBar from "@/components/AppSideBar";
 import { createContext, useState } from "react";
 import axios from "axios";
+import { ToastContainer } from "react-toastify";
 
 export const query = createContext();
 function App() {
@@ -120,6 +121,7 @@ function App() {
           <AppSideBar className="sticky " />
           <Outlet />
         </SidebarProvider>
+        <ToastContainer />
       </query.Provider>
     </>
   );
