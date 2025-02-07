@@ -3,6 +3,9 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import CardItems from "@/components/CardItems";
 import Loading from "@/components/Loading";
 import { query } from "@/App";
+import type from "@/components/type";
+import button from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const { getData, hasMore, fetchMore, isLoad, getHomeData, isQuery } =
@@ -21,6 +24,17 @@ const HomePage = () => {
 
   return (
     <main className="w-full h-screen bg-[#1A1A1D]">
+      <div className="flex gap-3 overflow-x-auto text-white md:hidden custom-scroll">
+        {type &&
+          type.map((genre, i) => (
+            <Link to={`/${genre.url}`} key={i}>
+              <button className="rounded-full text-xs border-[#facc15] border px-5 py-1 hover:bg-[#facc15] hover:text-white font-medium">
+                {genre.title}
+              </button>
+            </Link>
+          ))}
+      </div>
+
       <div id="scrollableDiv" className="h-full overflow-auto w-full">
         <InfiniteScroll
           dataLength={getData.length}

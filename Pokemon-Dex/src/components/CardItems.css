@@ -1,3 +1,21 @@
+.custom-scroll {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #facc15 transparent; /* Warna scrollbar */
+}
+
+.custom-scroll::-webkit-scrollbar {
+  height: 6px; /* Ukuran scrollbar */
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #facc15; /* Warna thumb (bagian yang bisa digeser) */
+  border-radius: 10px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent; /* Warna track (bagian belakang scrollbar) */
+}
+
 .button {
   --stone-50: #fafaf9;
   --stone-800: #292524;
@@ -89,4 +107,3 @@
     background-position: 8px 0, 12px 4px;
   }
 }
-
