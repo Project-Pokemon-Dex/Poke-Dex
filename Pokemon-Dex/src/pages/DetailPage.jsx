@@ -11,7 +11,7 @@ import {
   WeightIcon,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import soundFile from "../components/sound.mp3";
+import soundFile from "../components/sound2.mp3";
 
 const DetailPage = () => {
   const { name } = useParams();
@@ -76,7 +76,7 @@ const DetailPage = () => {
             name: stat.stat.name,
             value: stat.base_stat,
           })),
-          generation: speciesData.generation.name.toUpperCase(),
+          generation: speciesData.generation.name,
           habitat: speciesData.habitat ? speciesData.habitat.name : "Unknown",
           captureRate: speciesData.capture_rate,
           growthRate: speciesData.growth_rate.name,
@@ -226,6 +226,7 @@ const DetailPage = () => {
                   />
                 </Link>
                 <p className="font-bold capitalize text-center">{evo.name}</p>
+                <p className="text-center text-xs uppercase">{pokemon.generation}</p>
               </div>
               {index < evolutionChain.length - 1 && (
                 <div className="flex flex-col sm:flex-row items-center text-white">

@@ -4,9 +4,11 @@ import pokeball from "../assets/pokeball.png";
 import bg1 from "../assets/bg1.png";
 import axios from "axios";
 import sound2 from "../components/sound2.mp3";
+import { useNavigate } from "react-router-dom";
 
 const CardItems = ({ item }) => {
   const [favList, setFavList] = useState([]);
+  const navigate = useNavigate();
 
   const favorite = async (pokemon) => {
     const { data } = await axios.get(`http://localhost:3000/favorite`);
@@ -36,7 +38,8 @@ const CardItems = ({ item }) => {
 
   return (
     <>
-      <div className="card-content border-2 grid bg-[#1A1A1D] rounded-xl border-none overflow-hidden hover:scale-95 transition duration-500 w-full h-full">
+      <div className="card-content border-2 grid bg-[#1A1A1D] rounded-xl border-none overflow-hidden hover:scale-95 transition duration-500 w-full h-full cursor-pointer"
+      onClick={() => navigate(`/pokemon/${item.name}`)}>
         <img
           src={bg1}
           className="object-cover"
@@ -77,8 +80,10 @@ const CardItems = ({ item }) => {
 
             <div className="btn pt-6 pb-1">
               <button
+              
                 className="button truncate w-full font-bold"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   favorite(item), play();
                 }}
               >

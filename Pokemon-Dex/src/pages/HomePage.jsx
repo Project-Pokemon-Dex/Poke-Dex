@@ -1,49 +1,43 @@
-import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
-import CardItems from "@/components/CardItems";
+import React, { useContext, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-
-import { query } from "@/App";
+import CardItems from "@/components/CardItems";
 import Loading from "@/components/Loading";
+import { query } from "@/App";
 
 const HomePage = () => {
   const { getData, hasMore, fetchMore, isLoad, getHomeData, isQuery } =
     useContext(query);
+
   useEffect(() => {
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
     getHomeData();
 
     return () => {
-      // Kembalikan scrollbar saat keluar dari homepage
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
     };
   }, []);
 
   return (
-    <>
-      <main className="homePage w-full">
-        <div
-          id="scrollableDiv"
-          className=" h-dvh overflow-auto  w-full bg-[#1A1A1D]"
+    <main className="w-full h-screen bg-[#1A1A1D]">
+      <div id="scrollableDiv" className="h-full overflow-auto w-full">
+        <InfiniteScroll
+          dataLength={getData.length}
+          hasMore={hasMore && !isQuery}
+          next={fetchMore}
+          scrollableTarget="scrollableDiv"
+          loader={isLoad && <Loading />}
         >
-          <InfiniteScroll
-            dataLength={getData.length}
-            hasMore={hasMore && !isQuery}
-            next={fetchMore}
-            scrollableTarget="scrollableDiv"
-            loader={isLoad && <Loading />}
-          >
-            <div className="grid grid-cols-4 gap-4 w-full px-5 py-2 bg-[#1A1A1D] h-full ">
-              {getData.map((items, i) => (
-                <CardItems key={i} item={items} />
-              ))}
-            </div>
-          </InfiniteScroll>
-        </div>
-      </main>
-    </>
+          {/* Grid responsif */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-5 py-4">
+            {getData.map((items, i) => (
+              <CardItems key={i} item={items} />
+            ))}
+          </div>
+        </InfiniteScroll>
+      </div>
+    </main>
   );
 };
 
